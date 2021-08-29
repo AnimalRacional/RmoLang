@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RmoLang:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RmoLang_jar</output-path>
+    <root id="archive" name="RmoLang.jar">
+      <element id="module-output" name="RmoLang" />
+    </root>
+  </artifact>
+</component>
