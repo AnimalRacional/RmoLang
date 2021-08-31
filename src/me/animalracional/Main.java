@@ -1,6 +1,7 @@
 package me.animalracional;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -22,10 +23,7 @@ public class Main {
                 try{ memNum = Integer.parseInt(args[i+1]) > 0; }
                 catch(Exception e){ memNum = false; }
                 perLine = memNum ? Integer.parseInt(args[i+1]) : perLine;
-
             }
-
-
 
             else if(cur.equals("-mem") && i+1 < args.length){
                 boolean memNum;
@@ -38,7 +36,7 @@ public class Main {
         }
         // Finish getting the arguments
 
-        // Open the file for reading and get all instructions and store labels
+        // Open the file for reading, get all instructions and store labels
         HashMap<Integer, Instruction> instructions = new HashMap<>();
         HashMap<Integer, Integer> labels = new HashMap<>();
 
@@ -73,13 +71,14 @@ public class Main {
                     splitLine[0] = splitLine[0].toUpperCase();
 
                     Instruction toAdd;
+                    String[] parameters = Arrays.copyOfRange(splitLine, 1, splitLine.length);
                     switch (splitLine[0].toUpperCase()) {
                         case "LBL":
                             Instruction lblIn = new Instruction(splitLine[0], splitLine[1], null);
                             if (lblIn.isValid()) {
                                 labels.put(Integer.parseInt(splitLine[1]), curLine);
                             } else {
-                                System.out.println("Invalid instruction in line " + curLine+1 + " in " + line);
+                                System.out.println("Invalid label in line " + curLine+1 + ": " + line);
                                 return;
                             }
                             continue;
@@ -113,14 +112,14 @@ public class Main {
                     if (toAdd.isValid()) {
                         instructions.put(curLine++, toAdd);
                     } else {
-                        System.out.println("Invalid instruction in line " + curLine+1 + " in " + line);
+                        System.out.println("Invalid instruction in line " + curLine+1 + ": " + line);
                         return;
                     }
                 }
             }
         }
         catch(Exception e){
-            System.out.println("Something went wrong while in line " + curLine + " in " + line);
+            System.out.println("Something went wrong while in line " + curLine + ": " + line);
             e.printStackTrace();
             return;
         }
