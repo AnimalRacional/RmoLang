@@ -12,11 +12,14 @@ public class Instruction {
     static char[] comparators = "<>=#".toCharArray();
     String instruction;
     String[] parameters;
+
+    // Constructor
     public Instruction(String instru, String par1, String par2){
         instruction = instru.toUpperCase();
         parameters = new String[]{par1, par2};
     }
 
+    //Checks if the instruction is valid: returns true if it is, false if not
     public boolean isValid(){
         switch(instruction){
             case "APOINT":
@@ -63,6 +66,7 @@ public class Instruction {
         }
     }
 
+    // Executes the instruction and returns an InstructionResult with the resulting state
     public InstructionResult execute(int[] memory, int line, HashMap<Integer, Integer> labels, int pointer){
         boolean change = false;
         int targLine = 0;
@@ -178,25 +182,12 @@ public class Instruction {
                 endsIt = true;
                 break;
         }
-        /*
 
-SET (mem location) (integer reference) V
-ADD (integer reference) (mem location) V
-SUB (integer reference) (mem location) V
-MUL (integer reference) (mem location) V
-DIV (integer reference) (mem location) V
-OUT (integer reference) V
-AOUT (integer reference) - Outputs ASCII character V
-IN (mem location) V
-LBL (integer)
-GOTO (integer reference)
-GOTOIF (condition) (integer reference)
-
-
- */
         return new InstructionResult(change ? labels.get(targLine) : line, memory, endsIt, newPointer);
     }
 
+
+    // Returns the value of an integer reference, be it a memory location, a hard coded integer or a random number
     public static int getNumFromIntRef(String intRef, int[] mem, int pointer){
         if(isMemRef(intRef)){ return mem[isGetPointer(intRef) ? pointer : getNumFromMem(intRef, pointer)]; }
         else{
@@ -212,20 +203,29 @@ GOTOIF (condition) (integer reference)
         }
     }
 
+    // Returns if the string is referencing the pointer
     public static boolean isGetPointer(String ref){
         return ref.startsWith("$") && ref.substring(1, ref.length()).equalsIgnoreCase("p");
     }
+
+    // Returns the memory position mem is referencing or the current pointer position if it is referencing the pointer
     public static int getNumFromMem(String mem, int ptr)
     {
         String tmp = mem.substring(1);
         return tmp.equalsIgnoreCase("p") ? ptr : Integer.parseInt(tmp);
     }
+
+    // Checks if the string is a reference to memory or to the pointer. Returns true if it is, false if not
     public static boolean isMemRef(String ref){
         return ref.startsWith("$") && (isPosNum(ref.substring(1), true) || isGetPointer(ref));
     }
+
+    // Checks if the string is a reference to an integer, be it a hard coded number, a rand expression, a reference to memory or a reference to the pointer
     public static boolean isIntRef(String ref){
         return isMemRef(ref) || isNum(ref) || ref.equalsIgnoreCase("rand") || isGetPointer(ref);
     }
+
+    /*
     public static boolean isIntRef(String ref, boolean positive){
         if(positive) {
             return isMemRef(ref) || isPosNum(ref) || ref.equalsIgnoreCase("rand");
@@ -242,6 +242,9 @@ GOTOIF (condition) (integer reference)
             return isIntRef(ref);
         }
     }
+    */
+
+    // Checks if num is a positive number. If zero is true, 0 will be considered positive. Else, only numbers above 0 will be positive.
     public static boolean isPosNum(String num, boolean zero){
         if(isNum(num)) {
             int val = Integer.parseInt(num);
@@ -249,11 +252,13 @@ GOTOIF (condition) (integer reference)
         }
         return false;
     }
+
+    // Checks if num is a positive number. 0 is not a positive number.
     public static boolean isPosNum(String num){
-
         return isNum(num) && Integer.parseInt(num) > 0;
-
     }
+
+    // Checks if con is a valid conditional expression
     public static boolean isCondition(String con){
 
         String[] split = { "a", "a" };
@@ -269,6 +274,8 @@ GOTOIF (condition) (integer reference)
         if(compInd > -1){ split = con.split(comparator + ""); }
         return split.length == 2 && isIntRef(split[0]) && isIntRef(split[1]);
     }
+
+    // Asserts the result of the conditional expression con and returns it.
     public static boolean assertCondition(String con, int[] memory, int ptr){
         char comparator = 0;
         for(int i = 0; i < con.length(); i++){
@@ -294,6 +301,7 @@ GOTOIF (condition) (integer reference)
         return false;
     }
 
+    // Checks if val is an integer value
     public static boolean isNum(String val){
         try{ Integer.parseInt(val); return true; }
         catch(NumberFormatException e){
