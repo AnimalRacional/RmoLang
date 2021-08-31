@@ -132,7 +132,6 @@ public class Main {
             if(argums[0]){ System.out.println("Executing instruction " + instructions.get(curLine).instruction + " " + instructions.get(curLine).parameters[0] + " " + (instructions.get(curLine).parameters[1] != null ? instructions.get(curLine).parameters[1] : "")); }
 
             InstructionResult res = instructions.get(curLine++).execute(memory, curLine, labels, pointer);
-            memory = res.memory;
             curLine = res.line;
             pointer = res.pointer;
             if(res.end){ break; }

@@ -183,7 +183,7 @@ public class Instruction {
                 break;
         }
 
-        return new InstructionResult(change ? labels.get(targLine) : line, memory, endsIt, newPointer);
+        return new InstructionResult(change ? labels.get(targLine) : line, endsIt, newPointer);
     }
 
 
