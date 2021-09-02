@@ -1,3 +1,8 @@
+# IDE project specific folders
+.idea/
+.vs/
+.eclipse/
+
 # Compiled class file
 *.class
 
