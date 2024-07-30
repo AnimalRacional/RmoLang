@@ -1,0 +1,31 @@
+# Find number of steps to show a number fits the collatz conjecture, or 3x+1 problem
+# $0 - n of steps taken
+# $1 -  current value
+# $2 - checking if its even or odd
+
+SOUT Write a number:\n
+INVAL $1
+SET $0 -1
+LBL 1
+ADD 1 $0
+# Check if $1 is even or odd
+SET $2 $1
+MOD 2 $2
+ADD 10 $2
+OUT $1
+SOUT \n
+GOTOIF $1#1 $2
+GOTO 99
+# Even
+LBL 10
+DIV 2 $1
+GOTO 1
+# Odd
+LBL 11
+MUL 3 $1
+ADD 1 $1
+GOTO 1
+LBL 99
+SOUT Finished:
+OUT $0
+SOUT  steps
