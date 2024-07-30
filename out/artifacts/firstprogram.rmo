@@ -1,6 +1,0 @@
-SET $0 0
-LBL 1
-OUT $0
-ADD 1 $0
-GOTOIF $0=10 1
-OUT 10
