@@ -66,7 +66,8 @@ public class Main {
 
             while (reader.hasNextLine()) {
                 line = reader.nextLine();
-                if (!line.startsWith("#") && !line.equals("")) {
+                line = line.trim();
+                if (!line.startsWith("#") && !line.isEmpty()) {
                     String[] splitLine = line.split(" ");
                     splitLine[0] = splitLine[0].toUpperCase();
 

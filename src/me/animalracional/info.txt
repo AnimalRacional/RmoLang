@@ -41,18 +41,18 @@ Memory locations and references:
 You can refer or specify a memory location using the prefix '$'. $0 will correspond to the 1st memory address. If you use
 an address above the amount of memory specified with -mem or below 0, the interpreter will crash.
 SET $0 10 will set the value in the memory address 0 to 10.
-ADD $0 $1 will add the value in the memory address 0 (in this case it would be 10) to the memory address 1. So if $1 is 0,
-it will become 10.
+ADD $0 $1 will add the value in the memory address 0 (in this case it would be 10) to the memory address 1.
+So if $1 is 0, it will become 10.
 You can also use $P to get the memory address pointed at by the pointer.
 
 Labels:
-The line "LBL 10" will create a label with the ID 10. You can't use references to memory addresses as label IDs. You can
-go to a label using GOTO, for example "GOTO 10" would go to the label with the ID 10. You can use references to memory
+The line "LBL 10" will create a label with the ID 10. You can't use references to memory addresses as label IDs.
+You can go to a label using GOTO, for example "GOTO 10" would go to the label with the ID 10. You can use references to memory
 addresses in GOTO, so if $0 has the value 10 "GOTO $0" would go to the label with the ID 10. If you go to a label
 that doesn't exist, the interpreter will crash.
 
 Conditions:
-There are 3 possible operators to compare numbers:
+There are 4 possible operators to compare numbers:
 $0<$1 - true if $0 is smaller than $1
 $0>$1 - true if $0 is bigger than $1
 $0=$1 - true if $0 is equal to $1
