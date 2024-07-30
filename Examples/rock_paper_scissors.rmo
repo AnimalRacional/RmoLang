@@ -1,0 +1,104 @@
+# $0 - wins
+# $1 - losses
+# $2 - ties
+# 1 - Rock, 2 - Paper, 3 - Scissors
+# $3 - player choice
+# $4 - cpu choice
+# $5 - label to be jumped to
+SOUT Welcome!\n
+LBL 1
+    OUT $0
+    SOUT W/
+    OUT $1
+    SOUT L/
+    OUT $2
+    SOUT T\n
+    SOUT Rock, Paper or Scissors?\t
+    IN $3
+    # Get the player's choice through the first letter they write, whether upper case or lower case
+    # Rock; 'R' or 'r'
+    GOTOIF $3=82 2
+    GOTOIF $3=114 2
+    # Paper; 'P' or 'p'
+    GOTOIF $3=80 3
+    GOTOIF $3=112 3
+    # Scissors; 'S' or 's'
+    GOTOIF $3=83 4
+    GOTOIF $3=115 4
+    # End the game; 'E' or 'e'
+    GOTOIF $3=69 999
+    GOTOIF $3=101 999
+    # If they choose an invalid option, start over
+    GOTO 1
+    # All choices lead back to LBL 5
+    LBL 5
+    # Have the cpu choose a random option
+    SET $4 RAND
+    MOD 3 $4
+    ADD 1 $4
+    # Inform the player of the CPU's choice
+    SET $5 $4
+    ADD 40 $5
+    GOTO $5
+    LBL 41
+        SOUT I play rock!\n
+        GOTO 6
+    LBL 42
+        SOUT I play paper!\n
+        GOTO 6
+    LBL 43
+        SOUT I play scissors!\n
+        GOTO 6
+    LBL 6
+    # If they are the same, it's a tie
+    GOTOIF $3=$4 12
+    # If not, then go to the label with ID 50 + player choice
+    SET $5 $3
+    ADD 50 $5
+    GOTO $5
+    # Player chose rock
+    LBL 51
+        GOTOIF $4=2 11
+        GOTOIF $4=3 10
+    # Player chose paper
+    LBL 52
+        GOTOIF $4=1 10
+        GOTOIF $4=3 11
+    # Player chose scissors
+    LBL 53
+        GOTOIF $4=2 10
+        GOTOIF $4=1 11
+    END
+    # Inform the player of the result, add it to the stats and start over.
+    # Win
+    LBL 10
+        SOUT You win! Type "End" to finish\n
+        ADD 1 $0
+        GOTO 1
+    # Lose
+    LBL 11
+        SOUT You lose! Type "End" to finish\n
+        ADD 1 $1
+        GOTO 1
+    # Tie
+    LBL 12
+        SOUT It's a tie! Type "End" to finish\n
+        ADD 1 $2
+        GOTO 1
+END
+
+# Rock
+LBL 2
+    SET $3 1
+GOTO 5
+# Paper
+LBL 3
+    SET $3 2
+GOTO 5
+# Scissors
+LBL 4
+    SET $3 3
+GOTO 5
+
+LBL 999
+END

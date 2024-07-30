@@ -1,0 +1,19 @@
+# Initialize values; start with 0 and 1
+SET $0 0
+SET $1 1
+
+# Main loop
+LBL 1
+# In a third memory slot, put the previous value
+SET $2 $1
+#Add the second previous value to it, giving us the new value
+ADD $0 $2
+# Replace the second previous value with the previous value
+SET $0 $1
+# Replace the previous value with the new value; now the memory slots hold the previous value and the new value.
+SET $1 $2
+# Output the new value
+OUT $1
+SOUT \n
+# Stop when the value gets above 100, if not go back to label 1
+GOTOIF $1<100 1
