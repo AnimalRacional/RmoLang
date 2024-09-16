@@ -6,8 +6,7 @@
 # Commands:
 ## Memory Operations
 * SET (mem location) (integer reference) - sets the memory location to the specified integer
-* POINT (integer reference) - Adds the integer reference to the pointer's current location. If the pointer is at $5,
-* POINT 4 will make it go to $9, and POINT -4 will make it go to $1. The pointer starts at 0.
+* POINT (integer reference) - Adds the integer reference to the pointer's current location. If the pointer is at $5, POINT 4 will make it go to $9, and POINT -4 will make it go to $1. The pointer starts at 0.
 * APOINT (mem location) - Sets the pointer to the memory location specified
 * ADD (integer reference) (mem location) - Adds the integer to the memory location
 * SUB (integer reference) (mem location) - Subtracts the integer from the memory location (Alias: REM)
@@ -25,9 +24,8 @@
 
 ## Input
 * IN (mem location) - Gets input and stores it in the specified memory location
-* INVAL (mem location) - Keeps asking for input until an integer is given, and stores given integer in the specified
-memory location
-* INLINE (mem location) (integer) - Gets a string as input with length (integer)
+* INVAL (mem location) - Keeps asking for input until an integer is given, and stores given integer in the specified memory location
+* INLINE (mem location) (integer) - Gets a string as input with length (integer). If the string is smaller than the given length, appends a zero to the end.
 
 ## Flow Control
 * LBL (Integer) - Sets a label with the ID being the specified integer
