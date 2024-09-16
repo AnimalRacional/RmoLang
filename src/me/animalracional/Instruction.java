@@ -92,11 +92,11 @@ public class Instruction {
                 input = new Scanner(System.in);
                 String inp = input.nextLine();
                 int length = Integer.parseInt(parameters[1]);
-                length = Math.min(length, inp.length());
-                inp = inp.substring(0, length);
+                int toWrite = Math.min(length, inp.length());
+                inp = inp.substring(0, toWrite);
                 int curMem = getNumFromMem(parameters[0], pointer);
-                for(int i = 0; i < length; i++){
-                    memory[curMem+i] = inp.charAt(i);
+                for(int i = 0; i < toWrite; i++) {
+                    memory[curMem + i] = inp.charAt(i);
                 }
                 break;
             case "OUT":
@@ -192,7 +192,7 @@ public class Instruction {
         if(isMemRef(intRef)){ return mem[isGetPointer(intRef) ? pointer : getNumFromMem(intRef, pointer)]; }
         else{
             if(intRef.equalsIgnoreCase("rand")){
-                return new Random().nextInt(100);
+                return new Random().nextInt(2147483646);
             }
             else if(isGetPointer(intRef)){
                 return mem[pointer];
