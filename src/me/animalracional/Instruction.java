@@ -72,10 +72,16 @@ public class Instruction {
         int targLine = 0;
         boolean endsIt = false;
         int newPointer = pointer;
+        Scanner input;
+        int memAdd;
+        int length;
+        int curMem;
+        int memLoc;
+        int toAddOper;
         switch(instruction){
             case "IN":
-                Scanner input = new Scanner(System.in);
-                int memAdd = getNumFromMem(parameters[0], pointer);
+                input = new Scanner(System.in);
+                memAdd = getNumFromMem(parameters[0], pointer);
                 char toAddIn = input.next().charAt(0);
                 memory[memAdd] = toAddIn;
                 break;
@@ -91,10 +97,10 @@ public class Instruction {
             case "INLINE":
                 input = new Scanner(System.in);
                 String inp = input.nextLine();
-                int length = Integer.parseInt(parameters[1]);
+                length = Integer.parseInt(parameters[1]);
                 int toWrite = Math.min(length, inp.length());
                 inp = inp.substring(0, toWrite);
-                int curMem = getNumFromMem(parameters[0], pointer);
+                curMem = getNumFromMem(parameters[0], pointer);
                 for(int i = 0; i < toWrite; i++) {
                     memory[curMem + i] = inp.charAt(i);
                 }
@@ -138,11 +144,10 @@ public class Instruction {
                 newPointer += num;
                 break;
             case "SET":
-                int memLoc = getNumFromMem(parameters[0], pointer);
+                memLoc = getNumFromMem(parameters[0], pointer);
                 memory[memLoc] = getNumFromIntRef(parameters[1], memory, pointer);
                 break;
             case "ADD":
-                int toAddOper;
                 toAddOper = getNumFromIntRef(parameters[0], memory, pointer);
                 memLoc = getNumFromMem(parameters[1], pointer);
                 memory[memLoc] = memory[memLoc] + toAddOper;
@@ -205,7 +210,7 @@ public class Instruction {
 
     // Returns if the string is referencing the pointer
     public static boolean isGetPointer(String ref){
-        return ref.startsWith("$") && ref.substring(1, ref.length()).equalsIgnoreCase("p");
+        return ref.startsWith("$") && ref.substring(1).equalsIgnoreCase("p");
     }
 
     // Returns the memory position mem is referencing or the current pointer position if it is referencing the pointer
